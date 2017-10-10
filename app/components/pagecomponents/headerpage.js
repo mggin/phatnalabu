@@ -1,80 +1,61 @@
 import React, { Component } from 'react';
 //import Realm from 'realm'
 import fs from 'react-native-fs'
-//import { songPage } from '../../data'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { setFavoriteSong, setFavBool, favoriteAction } from '../../../actions'
 import { resetSongPage, getFavorite, favBool, songPage} from '../../utils'
 import { Actions, Scece, ActionConst } from 'react-native-router-flux'
 import { Container, Header, Left, Body, Right, Content, Button, Icon, Title } from 'native-base'
-const Realm = require('realm');
 
-export default class HeaderPage extends Component {
-	constructor(props) {
-	  super(props);
-	
-	  this.state = {
-	  	favoriteIcon: undefined,
-	  	favBool: undefined,
-	  };
+class HeaderPage extends Component {
+
+	componentWillMount() {
+		//this.props.setFavIcon()
 	}
 
-	componentDidMount() {
-		getFavorite(this.props.index)
-		this.setFavoriteIcon()
-		// console.log('header page')
+	_favoriteAction() {
+		this.props.favoriteAction()
 	}
-	setFavoriteIcon() {
-		this.setState({
-			favBool: favBool
-		})
-		if (this.state.favBool) {
-      	this.setState({
-      		favoriteIcon: 'ios-bookmarks',
-      	})
-      } else {
-      	this.setState({
-      		favoriteIcon: 'ios-bookmarks-outline',
-      	})
-      }
-	}
-	favoriteAction() {
-      if (this.state.favBool) {
-      	//console.log(favorite)
-      	this.setState({
-      		favoriteIcon: 'ios-bookmarks-outline',
-      		favBool: false
-      	})
-      } else {
-      	this.setState({
-      		favoriteIcon: 'ios-bookmarks',
-      		favBool: true
-      	})
-      }
- 	}
-	actionMain() {
+	_renderBackAction() {
 		Actions.menu({type: ActionConst.BACK})
-		//this.setFavorite()
-		resetSongPage()
+		this.props.setFavoriteSong()
 	}
 	render() {
 		return (
 			<Header>
 	            <Left>
-	              <Button transparent onPress={() => this.actionMain()}>
+	              <Button transparent onPress={() => this._renderBackAction()}>
 	                <Icon name='arrow-back' />
 	              </Button>
 	            </Left>
 	            <Right>
 	            <Body>
-	            	
 	            </Body>
 	              <Button transparent>
 	                <Icon name='md-settings' />
 	              </Button>
-	              <Button transparent onPress={() => this.favoriteAction()}>
-	                <Icon name={this.state.favoriteIcon} />
+	              <Button transparent onPress={() => this._favoriteAction()}>
+	                <Icon name={this.props.songPage.favIcon} />
 	              </Button>
 	            </Right>
 	  		</Header>
 		)
 	}
 }
+
+function mapStateToProps(state) {
+	return {
+		songPage: state.songPage 
+	}
+}
+
+function matchDispatchToProps(dispatch) {
+	return bindActionCreators({
+		setFavoriteSong: setFavoriteSong,
+		setFavBool: setFavBool,
+		favoriteAction: favoriteAction,
+	}, dispatch)
+}
+
+export default connect(mapStateToProps, matchDispatchToProps)(HeaderPage)

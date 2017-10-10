@@ -14,41 +14,23 @@ import {
 
 //import Realm from 'realm'
 import fs from 'react-native-fs'
-
-import { getSongPage, songPage } from '../utils'
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import HeaderPage from './pagecomponents/headerpage'
 import { Actions, Scece, ActionConst } from 'react-native-router-flux'
 import { Container, Header, Left, Body, Right, Content, Button, Icon, Title } from 'native-base'
+import { setSongPage } from '../../actions'
 const Realm = require('realm');
 
 
-export default class Menu extends Component {
-
+class Page extends Component {
   constructor(props) {
     super(props);
+  
     this.state = {
-      index: undefined,
-      title: undefined,
-      key: undefined,
-      verse1: undefined,
-      chorus: undefined,
-      verse2: undefined,
-      verse3: undefined,
-      verse4: undefined,
-      verse5: undefined,
-      verse6: undefined,
-      verse7: undefined,
-      verse8: undefined,
-      bridge: undefined,
-      favorite: undefined,
-      fontSize: 17,
+      fontSize: 11,
       fontFamily: 'Times New Roman'
     };
-  }
-
-  componentWillMount() {
-    getSongPage(this.props.index)
-    console.log(songPage)
   }
 
   _checkEmptyVerse(verse) {
@@ -60,88 +42,87 @@ export default class Menu extends Component {
     }
   }
   render() {
-    let fontObj =  {fontSize: this.state.fontSize, fontFamily: this.state.fontFamily}
-    let fontObjOfIndex = {fontSize: this.state.fontSize - 1, fontFamily: this.state.fontFamily}
-    let fontObjOfTitle =  {fontSize: this.state.fontSize + 1, fontFamily: this.state.fontFamily}
-    //console.log(this.state.favorite + this.state.index + 'print')
-    console.log(this.state.favorite)
+    const fontObj =  {fontSize: this.state.fontSize, fontFamily: this.state.fontFamily}
+    const fontObjOfIndex = {fontSize: this.state.fontSize - 1, fontFamily: this.state.fontFamily}
+    const fontObjOfTitle =  {fontSize: this.state.fontSize + 1, fontFamily: this.state.fontFamily}
+    const songPage = this.props.songPage
     return (
       <View style={{flex: 1}}>
         <Container>
-          <HeaderPage index={this.props.index}/>
+          <HeaderPage />
           <Content>
             <View style={styles.mainview}>
               <View style={styles.indexbox}>
-                <Text style={[styles.pgstyle,fontObj]}>{this.state.index}</Text>
+                <Text style={[styles.pgstyle,fontObj]}>{songPage.id}</Text>
               </View>
               <View style={styles.titlebox}>
-                <Text style={[styles.titlepage, fontObjOfTitle]}>{this.state.title}</Text>
+                <Text style={[styles.titlepage, fontObjOfTitle]}>{songPage.title}</Text>
               </View>
               <View style={styles.keybox}>
-                <Text style={[styles.keypage, fontObjOfIndex]}>{this.state.key}</Text>
+                <Text style={[styles.keypage, fontObjOfIndex]}>{songPage.key}</Text>
               </View>
-              { this._checkEmptyVerse(this.state.verse1) ? 
+              { this._checkEmptyVerse(songPage.verse1) ? 
                 <View style={styles.verse}>
                   <View style={styles.indexverseBox}>
                     <Text style={[styles.indexverse, fontObjOfIndex]}>1.</Text>
                   </View>
-                  <Text style={[styles.versetxt,  fontObj]}>{this.state.verse1}</Text>
+                  <Text style={[styles.versetxt,  fontObj]}>{songPage.verse1}</Text>
                 </View> : null }
-              { this._checkEmptyVerse(this.state.chorus) ? 
+              { this._checkEmptyVerse(songPage.chorus) ? 
                 <View style={styles.verse}>
                   <View style={styles.indexverseBoxOfChorus}>
                     <Text style={[styles.indexverse, fontObjOfIndex]}>Sakkik</Text>
                   </View>
-                  <Text style={[styles.versetxt, fontObj]}>{this.state.chorus}</Text>
+                  <Text style={[styles.versetxt, fontObj]}>{songPage.chorus}</Text>
                 </View> : null }
-              { this._checkEmptyVerse(this.state.verse2) ? 
+              { this._checkEmptyVerse(songPage.verse2) ? 
                 <View style={styles.verse}>
                   <View style={styles.indexverseBox}>
                     <Text style={[styles.indexverse, fontObjOfIndex]}>2.</Text>
                   </View>
-                  <Text style={[styles.versetxt, fontObj]}>{this.state.verse2}</Text>
+                  <Text style={[styles.versetxt, fontObj]}>{songPage.verse2}</Text>
                 </View> : null }
-              { this._checkEmptyVerse(this.state.verse3) ? 
+              { this._checkEmptyVerse(songPage.verse3) ? 
                 <View style={styles.verse}>
                   <View style={styles.indexverseBox}>
                     <Text style={[styles.indexverse, fontObjOfIndex]}>3.</Text>
                   </View>
-                  <Text style={[styles.versetxt, fontObj]}>{this.state.verse3}</Text>
+                  <Text style={[styles.versetxt, fontObj]}>{songPage.verse3}</Text>
                 </View> : null }
-              { this._checkEmptyVerse(this.state.verse4) ? 
+              { this._checkEmptyVerse(songPage.verse4) ? 
                 <View style={styles.verse}>
                   <View style={styles.indexverseBox}>
                     <Text style={[styles.indexverse, fontObjOfIndex]}>4.</Text>
                   </View>
-                  <Text style={[styles.versetxt, fontObj]}>{this.state.verse4}</Text>
+                  <Text style={[styles.versetxt, fontObj]}>{songPage.verse4}</Text>
                 </View> : null }
-              { this._checkEmptyVerse(this.state.verse5) ? 
+              { this._checkEmptyVerse(songPage.verse5) ? 
                 <View style={styles.verse}>
                   <View style={styles.indexverseBox}>
                     <Text style={[styles.indexverse, fontObjOfIndex]}>5.</Text>
                   </View>
-                  <Text style={[styles.versetxt, fontObj]}>{this.state.verse5}</Text>
+                  <Text style={[styles.versetxt, fontObj]}>{songPage.verse5}</Text>
                 </View> : null }
-              { this._checkEmptyVerse(this.state.verse6) ? 
+              { this._checkEmptyVerse(songPage.verse6) ? 
                 <View style={styles.verse}>
                   <View style={styles.indexverseBox}>
                     <Text style={[styles.indexverse, fontObjOfIndex]}>6.</Text>
                   </View>
-                  <Text style={[styles.versetxt, fontObj]}>{this.state.verse6}</Text>
+                  <Text style={[styles.versetxt, fontObj]}>{songPage.verse6}</Text>
                 </View> : null }
-              { this._checkEmptyVerse(this.state.verse7) ? 
+              { this._checkEmptyVerse(songPage.verse7) ? 
                 <View style={styles.verse}>
                   <View style={styles.indexverseBox}>
                     <Text style={[styles.indexverse, fontObjOfIndex]}>7.</Text>
                   </View>
-                  <Text style={[styles.versetxt, fontObj]}>{this.state.verse7}</Text>
+                  <Text style={[styles.versetxt, fontObj]}>{songPage.verse7}</Text>
                 </View> : null }
-              { this._checkEmptyVerse(this.state.verse8) ? 
+              { this._checkEmptyVerse(songPage.verse8) ? 
                 <View style={styles.verse}>
                   <View style={styles.indexverseBox}>
                     <Text style={[styles.indexverse, fontObjOfIndex]}>8.</Text>
                   </View>
-                  <Text style={[styles.versetxt, fontObj]}>{this.state.verse8}</Text>
+                  <Text style={[styles.versetxt, fontObj]}>{songPage.verse8}</Text>
                 </View> : null }
              
             </View>
@@ -198,4 +179,18 @@ const styles = StyleSheet.create({
   }
 
 });
+
+
+function mapStateToProps(state) {
+  return {
+    songPage: state.songPage
+  }
+}
+function matchDispatchToProps(dispatch) {
+  return bindActionCreators({
+    setSongPage: setSongPage
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, matchDispatchToProps)(Page);
 

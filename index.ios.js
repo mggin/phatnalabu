@@ -10,8 +10,9 @@ import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux'
 import allReducers from './reducers'
 import Route from './app/route'
+import Page from './app/components/pages'
 
-/*
+
 const store = createStore(
   allReducers
 );
@@ -26,5 +27,5 @@ export default class Phatnalabu extends Component {
     )
   }
 }
-*/
-AppRegistry.registerComponent('phatnalabu', () => Route);
+
+AppRegistry.registerComponent('phatnalabu', () => Phatnalabu);

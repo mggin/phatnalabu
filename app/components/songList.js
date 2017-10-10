@@ -17,11 +17,13 @@ import {
 //import Realm from 'realm'
 import fs from 'react-native-fs'
 import { songList } from '../data'
-import { getSongList } from '../utils'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Actions, Scene } from 'react-native-router-flux'
+import { setSongPage } from '../../actions'
 
 
-export default class SongList extends Component {
+class SongList extends Component {
 
   constructor(props) {
     super(props);
@@ -29,12 +31,16 @@ export default class SongList extends Component {
 
   _renderItem(item, index) {
     return (
-      <TouchableOpacity onPress={() => Actions.page({index: index})}
+      <TouchableOpacity onPress={() => this._renderActions(index)}
                         activeOpacity={0.7}
                         style={styles.item}>
         <Text>{item}</Text>
       </TouchableOpacity>
     )
+  }
+  _renderActions(index) {
+    Actions.page()
+    this.props.setSongPage(index)
   }
   render() {
     return (
@@ -63,4 +69,12 @@ const styles = StyleSheet.create({
     borderColor: '#2c3e50'
   },
   });
+
+function matchDispatchToProps(dispatch) {
+  return bindActionCreators({
+    setSongPage: setSongPage
+  }, dispatch);
+}
+
+export default connect(null, matchDispatchToProps)(SongList);
 

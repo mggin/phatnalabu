@@ -29,3 +29,30 @@ export const decreaseFontSize = (value) => {
   }
 }
 
+export const setSongPage = (index) => {
+  return {
+    type: 'SET_SONG_PAGE',
+    payload: index
+  }
+}
+
+export const setFavoriteSong = (value) => {
+  return {
+    type: 'SET_FAVORITE_SONG',
+    payload: value
+  }
+}
+
+export const setFavBool = () => {
+  return {
+    type: 'SET_FAV_BOOL'
+  }
+}
+
+export const favoriteAction = () => {
+  return {
+    type: 'FAVORITE_ACTION'
+  }
+}
+
+

@@ -5,17 +5,8 @@ import { songList } from '../data'
 import SongList from './songList'
 
 export default class Menu extends Component {
-  constructor(props) {
-    super(props);
-  
-    this.state = {
-      text: 'hello'
-
-    };
-  }
 
   componentDidMount() {
-    getSongList()
     this.setState({
       songList: songList
     })
@@ -61,7 +52,7 @@ export default class Menu extends Component {
         </Header>
         <Tabs initalPage={1}>
           <Tab heading="Labu">
-            <SongList dataList={this.state.songList}/>
+            <SongList />
           </Tab>
           <Tab heading="Favorite">
             <Container />
