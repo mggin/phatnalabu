@@ -1,10 +1,12 @@
 import {combineReducers} from 'redux'
 import setFontReducer from './reducerSetFont'
 import songPageReducer from './reducerSongPage'
+import dataListReducer from './reducerDataList'
 
 const allReducers = combineReducers({
   setFont: setFontReducer,
-  songPage: songPageReducer
+  songPage: songPageReducer,
+  dataList: dataListReducer
 })
 
 export default allReducers;

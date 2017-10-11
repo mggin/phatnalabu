@@ -3,23 +3,19 @@ import React, { Component } from 'react';
 import fs from 'react-native-fs'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { setFavoriteSong, setFavBool, favoriteAction } from '../../../actions'
-import { resetSongPage, getFavorite, favBool, songPage} from '../../utils'
+import { updateFavoriteSong, setFavBool, favoriteAction, getFavList } from '../../../actions'
 import { Actions, Scece, ActionConst } from 'react-native-router-flux'
 import { Container, Header, Left, Body, Right, Content, Button, Icon, Title } from 'native-base'
 
 class HeaderPage extends Component {
-
-	componentWillMount() {
-		//this.props.setFavIcon()
-	}
 
 	_favoriteAction() {
 		this.props.favoriteAction()
 	}
 	_renderBackAction() {
 		Actions.menu({type: ActionConst.BACK})
-		this.props.setFavoriteSong()
+		this.props.updateFavoriteSong(this.props.songPage.id, this.props.songPage.favorite)
+		this.props.getFavList()
 	}
 	render() {
 		return (
@@ -52,9 +48,10 @@ function mapStateToProps(state) {
 
 function matchDispatchToProps(dispatch) {
 	return bindActionCreators({
-		setFavoriteSong: setFavoriteSong,
+		updateFavoriteSong: updateFavoriteSong,
 		setFavBool: setFavBool,
 		favoriteAction: favoriteAction,
+		getFavList: getFavList
 	}, dispatch)
 }
 

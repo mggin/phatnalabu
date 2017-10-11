@@ -20,33 +20,32 @@ import { songList } from '../data'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Actions, Scene } from 'react-native-router-flux'
-import { setSongPage } from '../../actions'
+import { setSongPage, getFavList } from '../../actions'
 
 
 class SongList extends Component {
 
-  constructor(props) {
-    super(props);
+  componentWillUnMount() {
+    this.props.getFavList()
   }
-
   _renderItem(item, index) {
     return (
-      <TouchableOpacity onPress={() => this._renderActions(index)}
+      <TouchableOpacity onPress={() => this._renderActions(item.id, item.favorite)}
                         activeOpacity={0.7}
                         style={styles.item}>
-        <Text>{item}</Text>
+        <Text>{item.title}</Text>
       </TouchableOpacity>
     )
   }
-  _renderActions(index) {
+  _renderActions(index, fav) {
     Actions.page()
-    this.props.setSongPage(index)
+    this.props.setSongPage(index, fav)
   }
   render() {
     return (
       <View style={styles.container}>
         <FlatList
-          data={songList}
+          data={this.props.dataList.songList}
           renderItem={({item, index}) => this._renderItem(item, index)}
           showsVerticalScrollIndicator={false}
         />
@@ -69,12 +68,17 @@ const styles = StyleSheet.create({
     borderColor: '#2c3e50'
   },
   });
-
+function mapStateToProps(state) {
+  return {
+    dataList: state.dataList
+  }
+}
 function matchDispatchToProps(dispatch) {
   return bindActionCreators({
-    setSongPage: setSongPage
+    setSongPage: setSongPage,
+    getFavList: getFavList,
   }, dispatch);
 }
 
-export default connect(null, matchDispatchToProps)(SongList);
+export default connect(mapStateToProps, matchDispatchToProps)(SongList);
 

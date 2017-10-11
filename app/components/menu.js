@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import { Container, Tabs, Tab,  Header, Item, Input, Icon, Button, Text } from 'native-base';
-import { getSongList } from '../utils'
 import { songList } from '../data'
 import SongList from './songList'
+import FavoriteList from './favoriteList'
+import { getSongList, getFavList, setFavoriteDatabase } from '../../actions'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-export default class Menu extends Component {
+class Menu extends Component {
 
-  componentDidMount() {
-    this.setState({
-      songList: songList
-    })
-   // getSongList()
+  componentWillMount() {
+    this.props.getSongList()
+    this.props.getFavList()
   }
+  componentDidUnMount() {
+    this.props.setFavoriteDatabase()
+  }
+
   searchSongTitle = (title) => {
     let loweredTitle = title.toLowerCase()
     //let songTitles = this.state.songList
@@ -50,15 +55,29 @@ export default class Menu extends Component {
             <Text>Search</Text>
           </Button>
         </Header>
-        <Tabs initalPage={1}>
+        <Tabs initalPage={1} onChangeTab={() => this.props.setFavoriteDatabase()}>
           <Tab heading="Labu">
             <SongList />
           </Tab>
           <Tab heading="Favorite">
-            <Container />
+            <FavoriteList />
           </Tab>
         </Tabs>
       </Container>
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+    dataList: state.dataList
+  }
+}
+
+function matchDispatchToProps(dispatch) {
+  return bindActionCreators({
+    getSongList: getSongList,
+    getFavList: getFavList,
+    setFavoriteDatabase: setFavoriteDatabase
+  }, dispatch)
+}
+export default connect(null, matchDispatchToProps)(Menu)

@@ -23,45 +23,28 @@ const initState = {
 export default function(state = initState, action) {
   switch(action.type) {
     case 'SET_SONG_PAGE':
-      let rawData = []
+      //let rawData = []
       const realm = new Realm({path: fs.MainBundlePath + '/phatnaLabu.realm'})
       //.then(realm => {
-        let songObj = realm.objects('Labu')
-        console.log(action)
-        rawData.push(
-          songObj[action.payload].id,
-          songObj[action.payload].title,
-          songObj[action.payload].key,
-          songObj[action.payload].verse1,
-          songObj[action.payload].chorus,
-          songObj[action.payload].verse2,
-          songObj[action.payload].verse3,
-          songObj[action.payload].verse4,
-          songObj[action.payload].verse5,
-          songObj[action.payload].verse6,
-          songObj[action.payload].verse7,
-          songObj[action.payload].verse8,
-          songObj[action.payload].bridge,
-          songObj[action.payload].favorite,
-          )
-        console.log(rawData[13])
+        const songObj = realm.objects('Labu').filtered('id = "' + action.payload + ' "')
+        //console.log(songObj[0].title)
+        //console.log(action.payload)
       return {
-        index: action.payload,
-        id: rawData[0],
-        title: rawData[1],
-        key: rawData[2],
-        verse1: rawData[3],
-        chorus: rawData[4],
-        verse2: rawData[5],
-        verse3: rawData[6],
-        verse4: rawData[7],
-        verse5: rawData[8],
-        verse6: rawData[9],
-        verse7: rawData[10],
-        verse8: rawData[11],
-        bridge: rawData[12],
-        favorite: rawData[13],
-        favIcon: rawData[13] ? 'ios-bookmark' : 'ios-bookmark-outline'
+        id: songObj[0].id,
+        title: songObj[0].title,
+        key: songObj[0].key,
+        verse1: songObj[0].verse1,
+        chorus: songObj[0].chorus,
+        verse2: songObj[0].verse2,
+        verse3: songObj[0].verse3,
+        verse4: songObj[0].verse4,
+        verse5: songObj[0].verse5,
+        verse6: songObj[0].verse6,
+        verse7: songObj[0].verse7,
+        verse8: songObj[0].verse8,
+        bridge: songObj[0].bridge,
+        favorite: action.favorite,
+        favIcon: action.favorite ? 'ios-bookmark' : 'ios-bookmark-outline'
       }
       break
     case 'FAVORITE_ACTION':
@@ -80,16 +63,14 @@ export default function(state = initState, action) {
         }
       }
     case 'SET_FAVORITE_SONG':
-    Realm.open({path: fs.MainBundlePath + '/phatnaLabu.realm'})
-      .then(realm => {
-        realm.write(() => {
-          const songObj = realm.objects('Labu')
+    let realmy = new Realm({path: fs.MainBundlePath + '/phatnaLabu.realm'})
+        realmy.write(() => {
+          console.log(state.favorite + 'fav')
+          const songObj = realmy.objects('Labu')
           songObj[state.index].favorite = state.favorite
-        })
       })
-      console.log(state.index)
+      console.log(state.index + 'set fav')
       return state
-      console.log(state.index + state.favorite)
     default: // need this for default case
       return state 
     }

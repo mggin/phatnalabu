@@ -29,30 +29,45 @@ export const decreaseFontSize = (value) => {
   }
 }
 
-export const setSongPage = (index) => {
+export const setSongPage = (id, fav) => {
   return {
     type: 'SET_SONG_PAGE',
-    payload: index
+    payload: id,
+    favorite: fav
   }
 }
 
-export const setFavoriteSong = (value) => {
+export const updateFavoriteSong = (id, fav) => {
   return {
-    type: 'SET_FAVORITE_SONG',
-    payload: value
-  }
-}
-
-export const setFavBool = () => {
-  return {
-    type: 'SET_FAV_BOOL'
+    type: 'UPDATE_FAVORITE_SONG',
+    id: id,
+    favorite: fav
   }
 }
 
 export const favoriteAction = () => {
   return {
-    type: 'FAVORITE_ACTION'
+    type: 'FAVORITE_ACTION',
   }
 }
+
+export const getSongList = () => {
+  return {
+    type: 'GET_SONG_LIST'
+  }
+}
+
+export const getFavList = () => {
+  return {
+    type: 'GET_FAVORITE_LIST'
+  }
+}
+
+export const setFavoriteDatabase = () => {
+  return {
+    type: 'SET_FAVORITE_DATABASE'
+  }
+}
+
 
 
