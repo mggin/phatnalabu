@@ -16,12 +16,12 @@ import {
 
 //import Realm from 'realm'
 import fs from 'react-native-fs'
-import { songList } from '../data'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Actions, Scene } from 'react-native-router-flux'
-import { setSongPage, getFavList } from '../../actions'
-
+import { setSongPage, getFavList, searchAction } from '../../actions'
+import { Container, Tabs, Tab,  Header, Item, Input, Icon, Button} from 'native-base';
+import { SearchBar } from 'react-native-elements'
 
 class SongList extends Component {
 
@@ -42,12 +42,14 @@ class SongList extends Component {
     this.props.setSongPage(index, fav)
   }
   render() {
+    const header = <SearchBar placeholder="Type Here..." onChangeText={(text) => this.props.searchAction(text)}lightTheme round />;
     return (
       <View style={styles.container}>
         <FlatList
-          data={this.props.dataList.songList}
+          data={this.props.dataList.searchSongList}
           renderItem={({item, index}) => this._renderItem(item, index)}
           showsVerticalScrollIndicator={false}
+          ListHeaderComponent={header}
         />
       </View>
     );
@@ -77,6 +79,7 @@ function matchDispatchToProps(dispatch) {
   return bindActionCreators({
     setSongPage: setSongPage,
     getFavList: getFavList,
+    searchAction: searchAction
   }, dispatch);
 }
 

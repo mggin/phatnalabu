@@ -16,7 +16,6 @@ import {
 
 //import Realm from 'realm'
 import fs from 'react-native-fs'
-import { songList } from '../data'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Actions, Scene } from 'react-native-router-flux'

@@ -3,7 +3,8 @@ const Realm = require('realm')
 
 const initState = {
 	songList: [],
-	favoriteList: []
+	favoriteList: [],
+    searchSongList: [],
 }
 
 export default function(state = initState, action) {
@@ -21,6 +22,7 @@ export default function(state = initState, action) {
         	return {
         		...state,
         		songList: rawSongList,
+                searchSongList: rawSongList,
         	}
         case 'UPDATE_FAVORITE_SONG':
         /*
@@ -83,6 +85,34 @@ export default function(state = initState, action) {
                 })
 
             })
+        case 'SEARCH_ACTION':
+            if (action.title !== undefined) {
+                console.log(action.title)
+                let loweredTitle = action.title.toLowerCase()
+            //let songTitles = this.state.songList
+            //  update error ! whenever filter the search, reuse the original list: not updated list.
+                let filteredTitles = state.songList.filter((item) => {
+                    return item.title.toLowerCase().match(loweredTitle)
+                })
+                if (!action.title || action.title === '') {
+                    return {
+                        ...state,
+                        searchSongList: state.songList
+                    }
+                } else if (!Array.isArray(filteredTitles) && !filteredTitles.length) {
+                    // set no data flag to true so as to render flatlist conditionally
+                } else if (Array.isArray(filteredTitles)) {
+                    return {
+                        ...state,
+                        searchSongList: filteredTitles
+                    }
+                } else {
+                    console.log()
+                }
+            } else {
+                return state
+            }
+            
 		default:
 			return state
 	}

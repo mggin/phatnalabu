@@ -69,5 +69,12 @@ export const setFavoriteDatabase = () => {
   }
 }
 
+export const searchAction = (title) => {
+  return {
+    type: 'SEARCH_ACTION',
+    title: title,
+  }
+}
+
 
 
