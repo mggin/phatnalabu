@@ -1,31 +1,23 @@
 
-export const nightMode = () => {
-  return {
-    type: 'NIGHT_MODE'
-  }
-}
-
 //change font family
-export const setFont = (value) => {
+export const setFontFamily = (value) => {
   return {
     type: 'SET_FONT',
-    payload: value,
+    fontFamily: value,
   }
 }
 
 //increase font size
-export const increaseFontSize = (value) => {
+export const increaseFontSize = () => {
   return {
     type: 'INCREASE_FONT_SIZE',
-    payload: value,
   }
 }
 
 //decrease font size
-export const decreaseFontSize = (value) => {
+export const decreaseFontSize = () => {
   return {
     type: 'DECREASE_FONT_SIZE',
-    payload: value
   }
 }
 
@@ -73,6 +65,21 @@ export const searchAction = (title) => {
   return {
     type: 'SEARCH_ACTION',
     title: title,
+  }
+}
+
+export const getFontInfo = (family, size) => {
+  return {
+    type: 'GET_FONT_INFO',
+    family: family,
+    size: size
+
+  }
+}
+
+export const setFontInfo = () => {
+  return {
+    type: 'SET_FONT_INFO'
   }
 }
 

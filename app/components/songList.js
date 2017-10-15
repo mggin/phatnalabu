@@ -29,11 +29,13 @@ class SongList extends Component {
     this.props.getFavList()
   }
   _renderItem(item, index) {
+    const fontFamily = this.props.setting.fontFamily
+    const fontSize = this.props.setting.fontSize
     return (
       <TouchableOpacity onPress={() => this._renderActions(item.id, item.favorite)}
                         activeOpacity={0.7}
                         style={styles.item}>
-        <Text>{item.title}</Text>
+        <Text style={{fontFamily, fontSize}}>{item.title}</Text>
       </TouchableOpacity>
     )
   }
@@ -42,7 +44,12 @@ class SongList extends Component {
     this.props.setSongPage(index, fav)
   }
   render() {
-    const header = <SearchBar placeholder="Type Here..." onChangeText={(text) => this.props.searchAction(text)}lightTheme round />;
+    const header = <SearchBar placeholder="search" 
+                              //placeholderTextColor="#ecf0f1"
+                              //containerStyle={styles.containerStyle}
+                              //inputStyle={styles.inputStyle}
+                              lightTheme
+                              onChangeText={(text) => this.props.searchAction(text)} round />;
     return (
       <View style={styles.container}>
         <FlatList
@@ -60,19 +67,28 @@ const styles = StyleSheet.create({
   item: {
     //marginRight: 5,
     //marginTop: 5,
-    //marginLeft: 5,
+    marginLeft: 3,
     paddingLeft: 20,
     padding: 15,
     
     // backgroundColor: '#2980b9',
     borderBottomWidth: StyleSheet.hairlineWidth,
     // borderRadius: 7,
-    borderColor: '#2c3e50'
+    borderColor: '#7f8c8d'
   },
-  });
+  inputStyle: {
+    color: '#ecf0f1',
+    borderColor: 'black'
+    //backgroundColor: '#7f8c8d'
+  },
+  containerStyle: {
+    backgroundColor: 'white'
+  }
+});
 function mapStateToProps(state) {
   return {
-    dataList: state.dataList
+    dataList: state.dataList,
+    setting: state.setting
   }
 }
 function matchDispatchToProps(dispatch) {
@@ -82,6 +98,5 @@ function matchDispatchToProps(dispatch) {
     searchAction: searchAction
   }, dispatch);
 }
-
 export default connect(mapStateToProps, matchDispatchToProps)(SongList);
 

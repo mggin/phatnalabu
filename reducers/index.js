@@ -4,7 +4,7 @@ import songPageReducer from './reducerSongPage'
 import dataListReducer from './reducerDataList'
 
 const allReducers = combineReducers({
-  setFont: setFontReducer,
+  setting: setFontReducer,
   songPage: songPageReducer,
   dataList: dataListReducer
 })

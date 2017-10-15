@@ -19,16 +19,18 @@ import fs from 'react-native-fs'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Actions, Scene } from 'react-native-router-flux'
-import { setSongPage, getFavList } from '../../actions'
+import { setSongPage, getFavList, searchAction } from '../../actions'
 
 
 class FavoriteList extends Component {
   _renderItem(item, index) {
+    const fontFamily = this.props.setting.fontFamily
+    const fontSize = this.props.setting.fontSize
     return (
       <TouchableOpacity onPress={() => this._renderActions(item.id, item.favorite)}
                         activeOpacity={0.7}
                         style={styles.item}>
-        <Text>{item.title}</Text>
+        <Text style={{fontFamily, fontSize}}>{item.title}</Text>
       </TouchableOpacity>
     )
   }
@@ -54,20 +56,21 @@ const styles = StyleSheet.create({
   item: {
     //marginRight: 5,
     //marginTop: 5,
-    //marginLeft: 5,
+    marginLeft: 3,
     paddingLeft: 20,
     padding: 15,
     
     // backgroundColor: '#2980b9',
     borderBottomWidth: StyleSheet.hairlineWidth,
     // borderRadius: 7,
-    borderColor: '#2c3e50'
+    borderColor: '#7f8c8d'
   },
   });
 
 function mapStateToProps(state) {
   return {
-    dataList: state.dataList
+    dataList: state.dataList,
+    setting: state.setting
   }
 }
 function matchDispatchToProps(dispatch) {

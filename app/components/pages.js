@@ -28,7 +28,7 @@ class Page extends Component {
     super(props);
   
     this.state = {
-      fontSize: 11,
+      fontSize: 17,
       fontFamily: 'Times New Roman'
     };
   }
@@ -42,9 +42,11 @@ class Page extends Component {
     }
   }
   render() {
-    const fontObj =  {fontSize: this.state.fontSize, fontFamily: this.state.fontFamily}
-    const fontObjOfIndex = {fontSize: this.state.fontSize - 1, fontFamily: this.state.fontFamily}
-    const fontObjOfTitle =  {fontSize: this.state.fontSize + 1, fontFamily: this.state.fontFamily}
+    const fontFamily = this.props.setting.fontFamily
+    const fontSize = this.props.setting.fontSize
+    const fontObj =  {fontSize: fontSize, fontFamily: fontFamily}
+    const fontObjOfIndex = {fontSize: fontSize - 1, fontFamily}
+    const fontObjOfTitle =  {fontSize: fontSize + 1, fontFamily}
     const songPage = this.props.songPage
     return (
       <View style={{flex: 1}}>
@@ -183,7 +185,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    songPage: state.songPage
+    songPage: state.songPage,
+    setting: state.setting
   }
 }
 function matchDispatchToProps(dispatch) {

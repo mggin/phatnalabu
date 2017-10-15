@@ -14,6 +14,7 @@ import {Router,
 } from 'react-native-router-flux'
 import Menu from './components/menu'
 import Page from './components/pages'
+import Setting from './components/setting'
 //import Study from './components/study'
 //import Test from './components/test'
 //import Setting from './components/setting'
@@ -32,6 +33,8 @@ export default class Route extends Component {
           <Scene key='page'
           //initial={true}
                  component={Page}/>
+          <Scene key='setting'
+                 component={Setting}/>
         </Scene>
       </Router>
     )
