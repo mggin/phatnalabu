@@ -23,9 +23,15 @@ import { setSongPage, getFavList, searchAction } from '../../actions'
 
 
 class FavoriteList extends Component {
+  /*
+  componentWillMount() {
+    this.props.getFavList()
+  }
+  */
   _renderItem(item, index) {
     const fontFamily = this.props.setting.fontFamily
     const fontSize = this.props.setting.fontSize
+    console.log(fontFamily)
     return (
       <TouchableOpacity onPress={() => this._renderActions(item.id, item.favorite)}
                         activeOpacity={0.7}
@@ -75,7 +81,8 @@ function mapStateToProps(state) {
 }
 function matchDispatchToProps(dispatch) {
   return bindActionCreators({
-    setSongPage: setSongPage
+    setSongPage: setSongPage,
+    getFavList: getFavList
   }, dispatch);
 }
 

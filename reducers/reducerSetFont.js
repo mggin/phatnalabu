@@ -9,11 +9,11 @@ export default function(state = initState, action) {
   
   switch(action.type) {
     case 'GET_FONT_INFO':
-      console.log('get font')
-      if (action.size == undefined || action.family == undefined) {
+      //console.log('get font')
+      if (action.size == "NaN" || action.family == "NaN") {
         return state 
       } else {
-        console.log(action.family)
+        //console.log(action.size)
         return {
           ...state,
           fontFamily: action.family,
@@ -23,7 +23,7 @@ export default function(state = initState, action) {
 
       }
     case 'SET_FONT_INFO':
-      console.log('set info' + state.fontFamily)
+      //console.log('set info' + state.fontFamily)
       const fontInfoSet = [['@fontFamily', state.fontFamily], ['@fontSize', state.fontSize.toString()]]
       // console.log(fontInfo)
       AsyncStorage.multiSet(fontInfoSet)
@@ -56,6 +56,11 @@ export default function(state = initState, action) {
           ...state,
           fontSize: state.fontSize - 1
         }
+      }
+    case 'SLIDING':
+      return {
+        ...state,
+        fontSize: action.payload
       }
     default:
 

@@ -20,19 +20,11 @@ import HeaderPage from './pagecomponents/headerpage'
 import { Actions, Scece, ActionConst } from 'react-native-router-flux'
 import { Container, Header, Left, Body, Right, Content, Button, Icon, Title } from 'native-base'
 import { setSongPage } from '../../actions'
+import * as color from './colorScheme'
 const Realm = require('realm');
 
 
 class Page extends Component {
-  constructor(props) {
-    super(props);
-  
-    this.state = {
-      fontSize: 17,
-      fontFamily: 'Times New Roman'
-    };
-  }
-
   _checkEmptyVerse(verse) {
     //console.log(verse)
     if (verse == '') {
@@ -50,7 +42,7 @@ class Page extends Component {
     const songPage = this.props.songPage
     return (
       <View style={{flex: 1}}>
-        <Container>
+        <Container style={{backgroundColor: color.white}}>
           <HeaderPage />
           <Content>
             <View style={styles.mainview}>
@@ -75,6 +67,7 @@ class Page extends Component {
                   <View style={styles.indexverseBoxOfChorus}>
                     <Text style={[styles.indexverse, fontObjOfIndex]}>Sakkik</Text>
                   </View>
+                  <View style={{flex: 1}}/>
                   <Text style={[styles.versetxt, fontObj]}>{songPage.chorus}</Text>
                 </View> : null }
               { this._checkEmptyVerse(songPage.verse2) ? 
@@ -138,7 +131,7 @@ class Page extends Component {
 const styles = StyleSheet.create({
   mainview: {
     margin: 2,
-    //backgroundColor: '#000000'
+    backgroundColor: color.white
   },
   indexbox: {
     justifyContent: 'center',
@@ -161,16 +154,19 @@ const styles = StyleSheet.create({
   keybox: {
     justifyContent: 'center',
     alignItems: 'flex-end',
-    margin: 5,
+    marginRight: 20,
+    marginTop: 5,
+    marginBottom: 5
   },
   verse: {
     flexDirection: 'row',
     margin: 5,
     padding: 5,
-    backgroundColor: 'red',
+    //backgroundColor: 'red',
   },
   indexverseBoxOfChorus: {
-    flex: 2,
+    flex: 1,
+    alignItems: 'flex-end',
   },
   indexverseBox: {
     flex: 1,

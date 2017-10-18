@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import { Container, Tabs, Tab, Right,  Header, Item, Left, Title, Body, Icon, Button, Text } from 'native-base';
 import SongList from './songList'
 import FavoriteList from './favoriteList'
-import { getSongList, getFavList, setFavoriteDatabase, getFontInfo } from '../../actions'
+import { getSongList, getFavList, setFavoriteDatabase, getFontInfo, layoutChanged } from '../../actions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Actions, Scene } from 'react-native-router-flux'
+import {fontColor, colorBg, tabColor } from './colorScheme'
 import {
   AsyncStorage,
-  StyleSheet
+  StyleSheet,
+  Dimensions
 } from 'react-native'
-
+const { width, height } = Dimensions.get('window')
 class Menu extends Component {
 
   componentWillMount() {
@@ -22,7 +24,8 @@ class Menu extends Component {
   _getFontInfo() {
     AsyncStorage.multiGet(['@fontFamily', '@fontSize'])
       .then((fontInfo) => {
-         // console.log(fontInfo[0][1])
+         //console.log(fontInfo[0][1])
+         // console.log(fontInfo)
          this.props.getFontInfo(fontInfo[0][1], fontInfo[1][1])
     })
   }
@@ -30,9 +33,12 @@ class Menu extends Component {
   componentDidUnMount() {
     this.props.setFavoriteDatabase()
   }
+  onChangeTab() {
+    this.props.setFavoriteDatabase()
+  }
   render() {
     return (
-      <Container>
+      <Container onLayout={() => this.props.layoutChanged()}>
         <Header hasTabs
                 iosBarStyle='light-content'
                 style={styles.header}>
@@ -43,13 +49,13 @@ class Menu extends Component {
           </Body>
           <Right>
             <Button transparent onPress={() => Actions.setting()}>
-                  <Icon name='md-settings' style={{ color: '#95a5a6' }}/>
+                  <Icon name='md-settings' style={{ color: fontColor }}/>
             </Button>
           </Right>
         </Header>
-        <Tabs initalPage={1} 
+        <Tabs 
               tabBarUnderlineStyle={styles.tabBarUnderlineStyle}
-              onChangeTab={() => this.props.setFavoriteDatabase()}>
+              onChangeTab={() => this.onChangeTab()}>
           <Tab heading="Labu"
                textStyle={[styles.tabTxt, {fontSize: 17}]}
                activeTextStyle={[styles.activeTxt, {fontSize: 18}]}
@@ -72,31 +78,31 @@ class Menu extends Component {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#2c3e50',
+    backgroundColor: colorBg,
     //borderColor: '#3498db'
   },
   tab: {
-    backgroundColor: '#2c3e50',
-    borderColor: '#2c3e50',
+    backgroundColor: colorBg,
+    borderColor: colorBg,
     marginTop: 0,
   },
   tabBarUnderlineStyle: {
-    backgroundColor: 'white',
+    backgroundColor: fontColor,
     borderWidth: 0,
   },
   title: {
     fontSize: 19,
-    color: 'white',
+    color: fontColor,
     fontFamily: 'Times New Roman',
   },
   activeTxt: {
     fontFamily: 'Times New Roman',
-    color: 'white',
+    color: fontColor,
     fontWeight: '900'
   },
   tabTxt: {
     fontFamily: 'Times New Roman',
-    color: '#95a5a6',
+    color: tabColor,
     fontWeight: '700'
   },
 })
@@ -111,7 +117,8 @@ function matchDispatchToProps(dispatch) {
     getSongList: getSongList,
     getFavList: getFavList,
     setFavoriteDatabase: setFavoriteDatabase,
-    getFontInfo: getFontInfo
+    getFontInfo: getFontInfo,
+    layoutChanged: layoutChanged,
   }, dispatch)
 }
 export default connect(null, matchDispatchToProps)(Menu)

@@ -83,5 +83,20 @@ export const setFontInfo = () => {
   }
 }
 
+export const sliderAction = (value) => {
+  return {
+    type: 'SLIDING',
+    payload: value
+
+  }
+}
+
+export const layoutChanged = (arg1, arg2) => {
+  return {
+    type: 'LAYOUT_CHANGED',
+    width: arg1,
+    height: arg2
+  }
+}
 
 

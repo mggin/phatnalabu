@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 import { updateFavoriteSong, setFavBool, favoriteAction, getFavList } from '../../../actions'
 import { Actions, Scece, ActionConst } from 'react-native-router-flux'
 import { Container, Header, Left, Body, Right, Content, Button, Icon, Title } from 'native-base'
+import * as color from '../colorScheme'
 
 class HeaderPage extends Component {
 
@@ -19,20 +20,17 @@ class HeaderPage extends Component {
 	}
 	render() {
 		return (
-			<Header>
+			<Header style={{backgroundColor: color.colorBg}} iosBarStyle='light-content'>
 	            <Left>
 	              <Button transparent onPress={() => this._renderBackAction()}>
-	                <Icon name='arrow-back' />
+	                <Icon name='arrow-back' style={{color: color.fontColor}}/>
 	              </Button>
 	            </Left>
 	            <Right>
 	            <Body>
 	            </Body>
-	              <Button transparent>
-	                <Icon name='md-settings' />
-	              </Button>
 	              <Button transparent onPress={() => this._favoriteAction()}>
-	                <Icon name={this.props.songPage.favIcon} />
+	                <Icon name={this.props.songPage.favIcon} style={{color: color.fontColor}}/>
 	              </Button>
 	            </Right>
 	  		</Header>
