@@ -34,6 +34,7 @@ class Setting extends Component {
 
   _renderBackAction() {
     Actions.menu({type: ActionConst.BACK})
+    console.log(this.props.setting)
     this.props.setFontInfo()
     this.props.getFavList()
   }
@@ -43,23 +44,22 @@ class Setting extends Component {
     return (
       <Container onLayout={this.props.layoutChanged}>
         <Header iosBarStyle='light-content'
-                style={styles.header}>
+                style={[styles.header, {height: this.props.setting.heightHeader}]}>
             <Left>
               <Button transparent onPress={() => this._renderBackAction()}>
-                <Icon name='arrow-back' style={{ color: fontColor }}/>
+                <Icon name='arrow-back' style={{ color: fontColor, fontSize: this.props.setting.iconSize}}/>
               </Button>
             </Left>
           </Header>
           <View style={{flex: 1, flexDirection: this.props.layout.flexDirectionSetting}}>
             <View style={styles.mainBlock}>
               <View style={styles.header1}>
-                <Text style={styles.headerTxt}>Font Family</Text>
+                <Text style={[styles.headerTxt, {fontSize: this.props.setting.fontSize}]}>Font Family</Text>
               </View>
               <View style={styles.body}>
                 <Picker selectedValue={this.props.setting.fontFamily}
                      itemStyle={{fontSize: 16, fontFamily: 'Verdana', color: 'black', fontWeight: 'bold'}}
                      onValueChange={(itemValue) => this.props.setFontFamily(itemValue)}>
-                     <Picker.Item label="Optima" value="Optima" />
                      <Picker.Item label="Times New Roman" value="Times New Roman" />
                      <Picker.Item label="Thonburi" value="Thonburi" />
                      <Picker.Item label="Gill Sans" value="Gill Sans" />
@@ -68,7 +68,7 @@ class Setting extends Component {
             </View>
             <View style={styles.mainBlock}>
               <View style={styles.header1}>
-                <Text style={styles.headerTxt}>Font Size</Text>
+                <Text style={[styles.headerTxt, {fontSize: this.props.setting.fontSize}]}>Font Size</Text>
               </View>
               <View style={styles.body}>
                 <View style={styles.box}>
@@ -133,7 +133,6 @@ const styles = StyleSheet.create({
   },
   headerTxt: {
     fontFamily: 'Verdana',
-    fontSize: 16,
     color: white,
     fontWeight: 'bold'
   },

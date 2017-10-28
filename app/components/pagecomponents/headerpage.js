@@ -20,17 +20,17 @@ class HeaderPage extends Component {
 	}
 	render() {
 		return (
-			<Header style={{backgroundColor: color.colorBg}} iosBarStyle='light-content'>
+			<Header style={{backgroundColor: color.colorBg, height: this.props.setting.heightHeader}} iosBarStyle='light-content'>
 	            <Left>
 	              <Button transparent onPress={() => this._renderBackAction()}>
-	                <Icon name='arrow-back' style={{color: color.fontColor}}/>
+	                <Icon name='arrow-back' style={{color: color.fontColor, fontSize: this.props.setting.iconSize}}/>
 	              </Button>
 	            </Left>
 	            <Right>
 	            <Body>
 	            </Body>
 	              <Button transparent onPress={() => this._favoriteAction()}>
-	                <Icon name={this.props.songPage.favIcon} style={{color: color.fontColor}}/>
+	                <Icon name={this.props.songPage.favIcon} style={{color: color.fontColor, fontSize: this.props.setting.iconSize}} />
 	              </Button>
 	            </Right>
 	  		</Header>
@@ -40,7 +40,8 @@ class HeaderPage extends Component {
 
 function mapStateToProps(state) {
 	return {
-		songPage: state.songPage 
+		songPage: state.songPage,
+		setting: state.setting
 	}
 }
 

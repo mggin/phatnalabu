@@ -1,8 +1,14 @@
-import { AsyncStorage } from 'react-native'
+import { AsyncStorage, Dimensions} from 'react-native'
 
 const initState = {
   fontFamily: 'Times New Roman',
   fontSize: 16,
+  fontSizeOfTitle: 19,
+  fontSizeOfTab: 17,
+  heightHeader: 70,
+  iconSize: 30,
+  paddingList: 15,
+  marginPage: 2,
 }
 
 export default function(state = initState, action) {
@@ -10,7 +16,9 @@ export default function(state = initState, action) {
   switch(action.type) {
     case 'GET_FONT_INFO':
       //console.log('get font')
-      if (action.size == "NaN" || action.family == "NaN") {
+      console.log(action.family + action.size)
+      if (action.size == null || action.family == null) {
+        console.log('nan')
         return state 
       } else {
         //console.log(action.size)
@@ -24,7 +32,8 @@ export default function(state = initState, action) {
       }
     case 'SET_FONT_INFO':
       //console.log('set info' + state.fontFamily)
-      const fontInfoSet = [['@fontFamily', state.fontFamily], ['@fontSize', state.fontSize.toString()]]
+      let stringFontSize = state.fontSize.toString()
+      const fontInfoSet = [['@fontFamily', state.fontFamily], ['@fontSize', stringFontSize]]
       // console.log(fontInfo)
       AsyncStorage.multiSet(fontInfoSet)
       return state
@@ -61,6 +70,35 @@ export default function(state = initState, action) {
       return {
         ...state,
         fontSize: action.payload
+      }
+    case 'INITIAL_FONT':
+      const { width, height } = Dimensions.get('window')
+      if (width == 1366 || height == 1366) {
+          return {
+            ...state,
+            fontSize: 24,
+            fontSizeOfTitle: 27,
+            fontSizeOfTab: 26,
+            heightHeader: 120,
+            iconSize: 35,
+            paddingList: 25,
+            marginPage: 100
+          }
+      } else if (width == 768 || height == 768) {
+        console.log('in 768')
+        return {
+          ...state,
+          fontSize: 20,
+          fontSizeOfTitle: 23,
+          fontSizeOfTab: 22,
+          heightHeader: 100,
+          iconSize: 33,
+          paddingList: 20,
+          marginPage: 50
+        }
+      } else {
+        //console.log('normal device layout')
+        return state
       }
     default:
 

@@ -99,4 +99,15 @@ export const layoutChanged = (arg1, arg2) => {
   }
 }
 
+export const deviceChanged = () => {
+  return {
+    type: 'DEVICE_CHANGED',
+  }
+}
+
+export const initialFont = () => {
+  return {
+    type: 'INITIAL_FONT'
+  }
+}
 

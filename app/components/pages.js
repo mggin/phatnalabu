@@ -45,7 +45,7 @@ class Page extends Component {
         <Container style={{backgroundColor: color.white}}>
           <HeaderPage />
           <Content>
-            <View style={styles.mainview}>
+            <View style={[styles.mainview, {margin: this.props.setting.marginPage}]}>
               <View style={styles.indexbox}>
                 <Text style={[styles.pgstyle,fontObj]}>{songPage.id}</Text>
               </View>
@@ -130,7 +130,6 @@ class Page extends Component {
 
 const styles = StyleSheet.create({
   mainview: {
-    margin: 2,
     backgroundColor: color.white
   },
   indexbox: {

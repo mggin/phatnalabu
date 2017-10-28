@@ -15,13 +15,22 @@ import {Router,
 import Menu from './components/menu'
 import Page from './components/pages'
 import Setting from './components/setting'
+import Realm from 'realm'
+import { initialFont, deviceChanged } from '../actions'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 //import Study from './components/study'
 //import Test from './components/test'
 //import Setting from './components/setting'
 //import About from './components/about'
 
-export default class Route extends Component {
+class Route extends Component {
+  componentWillMount() {
+    this.props.initialFont()
+    //this.props.deviceChanged()
 
+    
+  }
   render() {
     return (
       <Router>
@@ -40,3 +49,12 @@ export default class Route extends Component {
     )
   }
 }
+
+
+function matchDispatchToProps(dispatch) {
+  return bindActionCreators({
+    initialFont: initialFont,  
+    deviceChanged: deviceChanged
+  }, dispatch)
+}
+export default connect(null, matchDispatchToProps)(Route)

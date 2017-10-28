@@ -26,6 +26,7 @@ class Menu extends Component {
       .then((fontInfo) => {
          //console.log(fontInfo[0][1])
          // console.log(fontInfo)
+         console.log(fontInfo[0][1])
          this.props.getFontInfo(fontInfo[0][1], fontInfo[1][1])
     })
   }
@@ -36,20 +37,23 @@ class Menu extends Component {
   onChangeTab() {
     this.props.setFavoriteDatabase()
   }
+  _renderAction() {
+    Actions.setting()
+  }
   render() {
     return (
       <Container onLayout={() => this.props.layoutChanged()}>
         <Header hasTabs
                 iosBarStyle='light-content'
-                style={styles.header}>
+                style={[styles.header, {height: this.props.setting.heightHeader}]}>
           <Left>
           </Left>
           <Body style={{flex: 3}}>
-            <Title style={styles.title}>PHATNA LABU</Title>
+            <Title style={[styles.title, {fontSize: this.props.setting.fontSizeOfTitle}]}>PHATNA LABU</Title>
           </Body>
           <Right>
             <Button transparent onPress={() => Actions.setting()}>
-                  <Icon name='md-settings' style={{ color: fontColor }}/>
+                  <Icon name='md-settings' style={{ color: fontColor, fontSize: this.props.setting.iconSize}} />
             </Button>
           </Right>
         </Header>
@@ -57,15 +61,15 @@ class Menu extends Component {
               tabBarUnderlineStyle={styles.tabBarUnderlineStyle}
               onChangeTab={() => this.onChangeTab()}>
           <Tab heading="Labu"
-               textStyle={[styles.tabTxt, {fontSize: 17}]}
-               activeTextStyle={[styles.activeTxt, {fontSize: 18}]}
+               textStyle={[styles.tabTxt, {fontSize: this.props.setting.fontSizeOfTab}]}
+               activeTextStyle={[styles.activeTxt, {fontSize: this.props.setting.fontSizeOfTab + 1}]}
                tabStyle={styles.tab}
                activeTabStyle={styles.tab}>
             <SongList />
           </Tab>
           <Tab heading="Favorite"
-               textStyle={[styles.tabTxt, {fontSize: 17}]}
-               activeTextStyle={[styles.activeTxt, {fontSize: 18}]}
+               textStyle={[styles.tabTxt, {fontSize: this.props.setting.fontSizeOfTab}]}
+               activeTextStyle={[styles.activeTxt, {fontSize: this.props.setting.fontSizeOfTab + 1}]}
                tabStyle={styles.tab}
                activeTabStyle={styles.tab}>
             <FavoriteList />
@@ -91,7 +95,6 @@ const styles = StyleSheet.create({
     borderWidth: 0,
   },
   title: {
-    fontSize: 19,
     color: fontColor,
     fontFamily: 'Times New Roman',
   },
@@ -108,7 +111,7 @@ const styles = StyleSheet.create({
 })
 function mapStateToProps(state) {
   return {
-    dataList: state.dataList
+    setting: state.setting,
   }
 }
 
@@ -121,4 +124,4 @@ function matchDispatchToProps(dispatch) {
     layoutChanged: layoutChanged,
   }, dispatch)
 }
-export default connect(null, matchDispatchToProps)(Menu)
+export default connect(mapStateToProps, matchDispatchToProps)(Menu)

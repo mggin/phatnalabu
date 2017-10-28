@@ -34,7 +34,7 @@ class SongList extends Component {
     return (
       <TouchableOpacity onPress={() => this._renderActions(item.id, item.favorite)}
                         activeOpacity={0.7}
-                        style={styles.item}>
+                        style={[styles.item, {padding: this.props.setting.paddingList}]}>
         <Text style={{fontFamily, fontSize}}>{item.title}</Text>
       </TouchableOpacity>
     )
@@ -46,8 +46,9 @@ class SongList extends Component {
   render() {
     const header = <SearchBar placeholder="search" 
                               //placeholderTextColor="#ecf0f1"
-                              //containerStyle={styles.containerStyle}
+                              //containerStyle={{height: 100,alignItems: 'center'}}
                               //inputStyle={styles.inputStyle}
+                             
                               lightTheme
                               onChangeText={(text) => this.props.searchAction(text)} round />;
     return (
@@ -69,7 +70,6 @@ const styles = StyleSheet.create({
     //marginTop: 5,
     marginLeft: 3,
     paddingLeft: 20,
-    padding: 15,
     
     // backgroundColor: '#2980b9',
     borderBottomWidth: StyleSheet.hairlineWidth,

@@ -35,7 +35,7 @@ class FavoriteList extends Component {
     return (
       <TouchableOpacity onPress={() => this._renderActions(item.id, item.favorite)}
                         activeOpacity={0.7}
-                        style={styles.item}>
+                        style={[styles.item, {padding: this.props.setting.paddingList}]}>
         <Text style={{fontFamily, fontSize}}>{item.title}</Text>
       </TouchableOpacity>
     )
